@@ -7,7 +7,7 @@ import { MantineProvider } from '@mantine/core';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <MantineProvider>
+    <MantineProvider forceColorScheme={'dark'}>
       <Component {...pageProps} />
     </MantineProvider>
   );
