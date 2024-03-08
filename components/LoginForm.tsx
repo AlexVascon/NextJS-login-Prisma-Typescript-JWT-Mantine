@@ -15,8 +15,10 @@ import {
   Stack,
 } from '@mantine/core';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 export default function Form(props: PaperProps) {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [type, toggle] = useToggle(['login', 'register']);
 
@@ -38,7 +40,7 @@ export default function Form(props: PaperProps) {
     setLoading(true);
 
     try {
-      const response = await fetch('/api/login', {
+      const response = await fetch(`/api/auth/${type}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -51,7 +53,8 @@ export default function Form(props: PaperProps) {
   
       if (response.ok) {
         const data = await response.json();
-        console.log('Login successful', data);
+        localStorage.setItem('accessToken', data)
+        router.push('/profile')
       } else {
         console.error('Login failed');
       }
